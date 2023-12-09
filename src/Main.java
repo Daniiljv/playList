@@ -25,11 +25,11 @@ public class Main {
         popularSongs.add(song4);
         popularSongs.add(song5);
 
-        int action = 1;
-        while (action != 0) {
+        int action;
+        while (true) {
             System.out.println("1.Add song to your playlist\n2.Delete song from your playlist\n3.Listen to popular songs" +
                     "\n4.Add one of the popular song to your playlist\n5.Listen to your playlist" +
-                    "\n6.View your top 3 favourite song\n0.Exit");
+                    "\n6.View your top 3 favourite song\n0.Exit\n");
             System.out.print("Put the action - ");
             action = scanner.nextInt();
             switch (action) {
@@ -78,13 +78,14 @@ public class Main {
                     System.out.println("\n---------------------------------------------------------------------------");
                     break;}
                     else {
-                        System.out.println("\nYour playlist is empty!");
                         System.out.println("\n-----------------------------------------------------------------------");
+                        System.out.println("Your playlist is empty!");
+                        System.out.println("-----------------------------------------------------------------------\n");
                         break;
                     }
                 case 3:
                     System.out.println("\n---------------------------------------------------------------------------");
-                    System.out.println("Popular song now:");
+                    System.out.println("Popular songs now:");
                     for (Song s : popularSongs) {
                         System.out.println((popularSongs.indexOf(s) + 1) + "." + s.getNameOfSong());
                     }
@@ -132,6 +133,7 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("\n---------------------------------------------------------------------------");
+                    if(usersSongs.size() != 0){
                     System.out.println("\nYour playlist:");
                     for (Song s : usersSongs) {
                         System.out.println((usersSongs.indexOf(s) + 1) + "." + s.getNameOfSong() + " ");
@@ -142,10 +144,12 @@ public class Main {
                     System.out.print("Now is playing - " + usersSongs.get(songToListen).getNameOfSong() +
                             " by - " + usersSongs.get(songToListen).getAuthorOfSong());
 
+
+
                     usersSongs.get(songToListen).increaseCountOfListening(); //Controlling count of listenings
 
                     desireToContinue = true;
-                    while(desireToContinue){
+                    while(desireToContinue) {
                         System.out.println("\nWould you like to continue to listening to your songs?\n1.Yes\n2.No");
                         System.out.print("Put your answer - ");
                         int answer = scanner.nextInt();
@@ -158,14 +162,19 @@ public class Main {
                             case 2:
                                 desireToContinue = false;
                                 break;
+                            }
                         }
+                    }
+                    else {
+                        System.out.println("Your playlist is empty!\n---------------------------------------------------------------------------");
                     }
                 case 6:
                     break;
                 case 0:
                     System.out.println("\nYou have successfully exited!");
-                    action = 0;
-                    break;
+                    return;
+                default:
+                    System.out.println("\nIncorrect choice, try again!\n");
             }
 
         }
