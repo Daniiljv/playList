@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -79,8 +81,8 @@ public class Main {
                     break;}
                     else {
                         System.out.println("\n-----------------------------------------------------------------------");
-                        System.out.println("Your playlist is empty!");
-                        System.out.println("-----------------------------------------------------------------------\n");
+                        System.out.println("\nYour playlist is empty!");
+                        System.out.println("\n-----------------------------------------------------------------------");
                         break;
                     }
                 case 3:
@@ -91,27 +93,31 @@ public class Main {
                     }
                     System.out.print("Put the number of song you'd like to listen to - ");
                     int numberOfSong = scanner.nextInt() - 1;
-                    System.out.print("Now is playing - " + popularSongs.get(numberOfSong).getNameOfSong() +
-                            " by - " + popularSongs.get(numberOfSong).getAuthorOfSong());
-                    boolean desireToContinue = true;
-                    while (desireToContinue) {
-                        System.out.println("\nWould you like to continue to listening to popular songs?\n1.Yes\n2.No");
-                        System.out.print("Put your answer - ");
-                        int answer = scanner.nextInt();
-                        switch (answer) {
-                            case 1:
-                                System.out.print("Put the number of song you'd like to listen to - ");
-                                numberOfSong = scanner.nextInt();
-                                System.out.print("Now is playing - " + popularSongs.get(numberOfSong).getNameOfSong());
-                                break;
-                            case 2:
-                                desireToContinue = false;
-                                break;
+                    if(numberOfSong <= popularSongs.size()) {
+                        System.out.print("Now is playing - " + popularSongs.get(numberOfSong).getNameOfSong() +
+                                " by - " + popularSongs.get(numberOfSong).getAuthorOfSong());
+                        boolean desireToContinue = true;
+                        while (desireToContinue) {
+                            System.out.println("\nWould you like to continue to listening to popular songs?\n1.Yes\n2.No");
+                            System.out.print("Put your answer - ");
+                            int answer = scanner.nextInt();
+                            switch (answer) {
+                                case 1:
+                                    System.out.print("Put the number of song you'd like to listen to - ");
+                                    numberOfSong = scanner.nextInt();
+                                    System.out.print("Now is playing - " + popularSongs.get(numberOfSong).getNameOfSong());
+                                    break;
+                                case 2:
+                                    desireToContinue = false;
+                                    break;
+                                default:
+                                    System.out.println("Wrong answer!");
+                            }
                         }
+                        System.out.println("\n---------------------------------------------------------------------------");
+                        break;
                     }
-                    System.out.println("\n---------------------------------------------------------------------------");
-                    break;
-                case 4:
+                case 4: // Added checking of the song to add
                     System.out.println("\n---------------------------------------------------------------------------");
                     System.out.println("Popular song now:");
                     for (Song s : popularSongs) {
@@ -120,6 +126,8 @@ public class Main {
                     System.out.println("\n---------------------------------------------------------------------------");
                     System.out.print("Put the number of the song you'd like to add - ");
                     int addPopularSong = scanner.nextInt() - 1;
+
+                    if(addPopularSong <= popularSongs.size()){
                     usersSongs.add(popularSongs.get(addPopularSong));
 
                     System.out.println("The song - " + popularSongs.get(addPopularSong).getNameOfSong() + " has added!");
@@ -131,6 +139,12 @@ public class Main {
                     }
                     System.out.println("\n---------------------------------------------------------------------------");
                     break;
+                    }
+                    else{
+                        System.out.println("\nThere is no the song with this number(");
+                        System.out.println("\n-----------------------------------------------------------------------");
+                        break;
+                    }
                 case 5:
                     System.out.println("\n---------------------------------------------------------------------------");
                     if(usersSongs.size() != 0){
@@ -144,11 +158,9 @@ public class Main {
                     System.out.print("Now is playing - " + usersSongs.get(songToListen).getNameOfSong() +
                             " by - " + usersSongs.get(songToListen).getAuthorOfSong());
 
-
-
                     usersSongs.get(songToListen).increaseCountOfListening(); //Controlling count of listenings
 
-                    desireToContinue = true;
+                    boolean desireToContinue = true;
                     while(desireToContinue) {
                         System.out.println("\nWould you like to continue to listening to your songs?\n1.Yes\n2.No");
                         System.out.print("Put your answer - ");
@@ -162,11 +174,15 @@ public class Main {
                             case 2:
                                 desireToContinue = false;
                                 break;
+                            default:
+                                System.out.println("Wrong answer!");
                             }
                         }
                     }
                     else {
-                        System.out.println("Your playlist is empty!\n---------------------------------------------------------------------------");
+                        System.out.println("\nYour playlist is empty!");
+                        System.out.println("\n--------------------------------------------------------------------------");
+                        break;
                     }
                 case 6:
                     break;
