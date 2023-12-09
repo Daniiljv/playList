@@ -28,17 +28,18 @@ public class Main {
         int action = 1;
         while (action != 0) {
             System.out.println("1.Add song to your playlist\n2.Delete song from your playlist\n3.Listen to popular songs" +
-                    "\n4.Add one of the popular song to your playlist\n5.View your top 3 favourite song" +
-                    "\n6.Listen to your playlist\n7.View your top 3 favourite song");
+                    "\n4.Add one of the popular song to your playlist\n5.Listen to your playlist" +
+                    "\n6.View your top 3 favourite song\n0.Exit");
             System.out.print("Put the action - ");
             action = scanner.nextInt();
             switch (action) {
                 case 1:
                     System.out.print("Put the name of the song - ");
-                    nameOfSong = scanner.next();
+                    scanner.nextLine();
+                    nameOfSong = scanner.nextLine();
 
                     System.out.print("Put the author of the song - ");
-                    authorOfSong = scanner.next();
+                    authorOfSong = scanner.nextLine();
 
                     System.out.print("Put the length of song - ");
                     lengthOfSong = scanner.nextDouble();
@@ -56,8 +57,16 @@ public class Main {
                     break;
 
                 case 2:
+                    if(usersSongs.size() != 0){
+                    System.out.println("\n---------------------------------------------------------------------------");
+                    System.out.println("\nYour playlist:");
+                    for (Song s : usersSongs) {
+                        System.out.println((usersSongs.indexOf(s) + 1) + "." + s.getNameOfSong() + " ");
+                    }
+                    System.out.println("\n---------------------------------------------------------------------------");
+
                     System.out.print("Put the number of the song you'd like to delete - ");
-                    int indexOfSongToDelete = scanner.nextInt();
+                    int indexOfSongToDelete = scanner.nextInt() - 1;
                     usersSongs.remove(indexOfSongToDelete);
                     System.out.println("Song has been successfully deleted!");
 
@@ -67,7 +76,12 @@ public class Main {
                         System.out.println((usersSongs.indexOf(s) + 1) + "." + s.getNameOfSong() + " ");
                     }
                     System.out.println("\n---------------------------------------------------------------------------");
-                    break;
+                    break;}
+                    else {
+                        System.out.println("\nYour playlist is empty!");
+                        System.out.println("\n-----------------------------------------------------------------------");
+                        break;
+                    }
                 case 3:
                     System.out.println("\n---------------------------------------------------------------------------");
                     System.out.println("Popular song now:");
@@ -75,8 +89,9 @@ public class Main {
                         System.out.println((popularSongs.indexOf(s) + 1) + "." + s.getNameOfSong());
                     }
                     System.out.print("Put the number of song you'd like to listen to - ");
-                    int numberOfSong = scanner.nextInt();
-                    System.out.print("Now is playing - " + popularSongs.get(numberOfSong).getNameOfSong());
+                    int numberOfSong = scanner.nextInt() - 1;
+                    System.out.print("Now is playing - " + popularSongs.get(numberOfSong).getNameOfSong() +
+                            " by - " + popularSongs.get(numberOfSong).getAuthorOfSong());
                     boolean desireToContinue = true;
                     while (desireToContinue) {
                         System.out.println("\nWould you like to continue to listening to popular songs?\n1.Yes\n2.No");
@@ -94,6 +109,62 @@ public class Main {
                         }
                     }
                     System.out.println("\n---------------------------------------------------------------------------");
+                    break;
+                case 4:
+                    System.out.println("\n---------------------------------------------------------------------------");
+                    System.out.println("Popular song now:");
+                    for (Song s : popularSongs) {
+                        System.out.println((popularSongs.indexOf(s) + 1) + "." + s.getNameOfSong());
+                    }
+                    System.out.println("\n---------------------------------------------------------------------------");
+                    System.out.print("Put the number of the song you'd like to add - ");
+                    int addPopularSong = scanner.nextInt() - 1;
+                    usersSongs.add(popularSongs.get(addPopularSong));
+
+                    System.out.println("The song - " + popularSongs.get(addPopularSong).getNameOfSong() + " has added!");
+
+                    System.out.println("\n---------------------------------------------------------------------------");
+                    System.out.println("\nYour updated playlist:");
+                    for (Song s : usersSongs) {
+                        System.out.println((usersSongs.indexOf(s) + 1) + "." + s.getNameOfSong() + " ");
+                    }
+                    System.out.println("\n---------------------------------------------------------------------------");
+                    break;
+                case 5:
+                    System.out.println("\n---------------------------------------------------------------------------");
+                    System.out.println("\nYour playlist:");
+                    for (Song s : usersSongs) {
+                        System.out.println((usersSongs.indexOf(s) + 1) + "." + s.getNameOfSong() + " ");
+                    }
+                    System.out.println("\n---------------------------------------------------------------------------");
+                    System.out.print("Put the number of the song you'd like to listen - ");
+                    int songToListen = scanner.nextInt() - 1;
+                    System.out.print("Now is playing - " + usersSongs.get(songToListen).getNameOfSong() +
+                            " by - " + usersSongs.get(songToListen).getAuthorOfSong());
+
+                    usersSongs.get(songToListen).increaseCountOfListening(); //Controlling count of listenings
+
+                    desireToContinue = true;
+                    while(desireToContinue){
+                        System.out.println("\nWould you like to continue to listening to your songs?\n1.Yes\n2.No");
+                        System.out.print("Put your answer - ");
+                        int answer = scanner.nextInt();
+                        switch (answer) {
+                            case 1:
+                                System.out.print("Put the number of song you'd like to listen to - ");
+                                numberOfSong = scanner.nextInt() - 1;
+                                System.out.print("Now is playing - " + popularSongs.get(numberOfSong).getNameOfSong());
+                                break;
+                            case 2:
+                                desireToContinue = false;
+                                break;
+                        }
+                    }
+                case 6:
+                    break;
+                case 0:
+                    System.out.println("\nYou have successfully exited!");
+                    action = 0;
                     break;
             }
 

@@ -2,7 +2,7 @@ public class Song {
     private String nameOfSong;
     private String authorOfSong;
     private double lengthOfSong;
-    private int countOfListening;
+    private int countOfListening = 0;
 
     public Song(String nameOfSong, String authorOfSong, double lengthOfSong){
         this.nameOfSong = nameOfSong;
@@ -19,5 +19,9 @@ public class Song {
 
     public double getLengthOfSong() {
         return lengthOfSong;
+    }
+
+    public void increaseCountOfListening(){
+        countOfListening++;
     }
 }
