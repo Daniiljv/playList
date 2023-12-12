@@ -113,12 +113,13 @@ public class Main {
                             switch (answer) {
                                 case 1:
                                     for (Song s : popularSongs) {
-                                        System.out.println((popularSongs.indexOf(s) + 1) + "." + s.getNameOfSong());
+                                        System.out.println((popularSongs.indexOf(s) - 1) + "." + s.getNameOfSong());
                                     }
                                     System.out.print("Put the number of song you'd like to listen to - ");
                                     numberOfSong = scanner.nextInt();
                                     if (numberOfSong < popularSongs.size()){
-                                    System.out.print("Now is playing - " + popularSongs.get(numberOfSong).getNameOfSong());}
+                                    System.out.print("Now is playing - " + popularSongs.get(numberOfSong).getNameOfSong());
+                                        System.out.println(" by - " + popularSongs.get(numberOfSong).getAuthorOfSong());}
                                     else {
                                         System.out.println("Invalid input, try again");
                                     }
@@ -204,6 +205,7 @@ public class Main {
                     }
                     break;
                 case 6:
+
                     break;
                 case 7:
                     if (usersSongs.isEmpty()){
