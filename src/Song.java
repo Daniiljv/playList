@@ -24,4 +24,8 @@ public class Song {
     public void increaseCountOfListening(){
         countOfListening++;
     }
+
+    public int getCountOfListening() {
+        return countOfListening;
+    }
 }

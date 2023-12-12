@@ -1,10 +1,32 @@
-import org.w3c.dom.ls.LSOutput;
 
+
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
+
+import javax.swing.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, JavaLayerException {
+
+        FileInputStream jingleBells = new FileInputStream("D:/IT.academy/playList/src/Bobby Helms - Jingle Bells Rock.mp3");
+        Player playerJingleBells = new Player(jingleBells);
+
+        FileInputStream rockinAround = new FileInputStream("D:/IT.academy/playList/src/Brenda Lee - Rockin’ Around The Christmas Tree.mp3");
+        Player playerRockinAround = new Player(rockinAround);
+
+        FileInputStream letItSnow = new FileInputStream("D:/IT.academy/playList/src/Dean Martin - Let It Snow, Let It Snow, Let It Snow (Remastered).mp3");
+        Player playerLetItSnow = new Player(letItSnow);
+
+        FileInputStream santaBaby = new FileInputStream("D:/IT.academy/playList/src/Eartha Kitt - Santa Baby (Edit).mp3");
+        Player playerSantaBaby = new Player(santaBaby);
+
+        FileInputStream lastChristmas = new FileInputStream("D:/IT.academy/playList/src/Wham! - Last Christmas (из фильма «Рождество на двоих»).mp3");
+        Player playerLastChristmas = new Player(lastChristmas);
+
 
         Scanner scanner = new Scanner(System.in);
 
@@ -59,27 +81,27 @@ public class Main {
                     break;
 
                 case 2:
-                    if(usersSongs.size() != 0){
-                    System.out.println("\n---------------------------------------------------------------------------");
-                    System.out.println("\nYour playlist:");
-                    for (Song s : usersSongs) {
-                        System.out.println((usersSongs.indexOf(s) + 1) + "." + s.getNameOfSong() + " ");
-                    }
-                    System.out.println("\n---------------------------------------------------------------------------");
+                    if (usersSongs.size() != 0) {
+                        System.out.println("\n---------------------------------------------------------------------------");
+                        System.out.println("\nYour playlist:");
+                        for (Song s : usersSongs) {
+                            System.out.println((usersSongs.indexOf(s) + 1) + "." + s.getNameOfSong() + " ");
+                        }
+                        System.out.println("\n---------------------------------------------------------------------------");
 
-                    System.out.print("Put the number of the song you'd like to delete - ");
-                    int indexOfSongToDelete = scanner.nextInt() - 1;
-                    usersSongs.remove(indexOfSongToDelete);
-                    System.out.println("Song has been successfully deleted!");
+                        System.out.print("Put the number of the song you'd like to delete - ");
+                        int indexOfSongToDelete = scanner.nextInt() - 1;
+                        usersSongs.remove(indexOfSongToDelete);
+                        System.out.println("Song has been successfully deleted!");
 
-                    System.out.println("\n---------------------------------------------------------------------------");
-                    System.out.println("\nYour updated playlist:");
-                    for (Song s : usersSongs) {
-                        System.out.println((usersSongs.indexOf(s) + 1) + "." + s.getNameOfSong() + " ");
-                    }
-                    System.out.println("\n---------------------------------------------------------------------------");
-                    break;}
-                    else {
+                        System.out.println("\n---------------------------------------------------------------------------");
+                        System.out.println("\nYour updated playlist:");
+                        for (Song s : usersSongs) {
+                            System.out.println((usersSongs.indexOf(s) + 1) + "." + s.getNameOfSong() + " ");
+                        }
+                        System.out.println("\n---------------------------------------------------------------------------");
+                        break;
+                    } else {
                         System.out.println("\n-----------------------------------------------------------------------");
                         System.out.println("\nYour playlist is empty!");
                         System.out.println("\n-----------------------------------------------------------------------");
@@ -92,31 +114,29 @@ public class Main {
                         System.out.println((popularSongs.indexOf(s) + 1) + "." + s.getNameOfSong());
                     }
                     System.out.print("Put the number of song you'd like to listen to - ");
-                    int numberOfSong = scanner.nextInt() - 1;
-                    if(numberOfSong <= popularSongs.size()) {
-                        System.out.print("Now is playing - " + popularSongs.get(numberOfSong).getNameOfSong() +
-                                " by - " + popularSongs.get(numberOfSong).getAuthorOfSong());
-                        boolean desireToContinue = true;
-                        while (desireToContinue) {
-                            System.out.println("\nWould you like to continue to listening to popular songs?\n1.Yes\n2.No");
-                            System.out.print("Put your answer - ");
-                            int answer = scanner.nextInt();
-                            switch (answer) {
-                                case 1:
-                                    System.out.print("Put the number of song you'd like to listen to - ");
-                                    numberOfSong = scanner.nextInt();
-                                    System.out.print("Now is playing - " + popularSongs.get(numberOfSong).getNameOfSong());
-                                    break;
-                                case 2:
-                                    desireToContinue = false;
-                                    break;
-                                default:
-                                    System.out.println("Wrong answer!");
-                            }
+                    int numberOfSong = scanner.nextInt();
+                    if (numberOfSong <= popularSongs.size()) {
+                        switch (numberOfSong) {
+                            case 1:
+                                playerLastChristmas.play();
+                                break;
+                            case 2:
+                                playerLetItSnow.play();
+                                break;
+                            case 3:
+                                playerRockinAround.play();
+                                break;
+                            case 4:
+                                playerJingleBells.play();
+                            case 5:
+                                playerSantaBaby.play();
                         }
-                        System.out.println("\n---------------------------------------------------------------------------");
-                        break;
+                    } else {
+                        System.out.println("Wrong number!");
                     }
+                    System.out.println("\n---------------------------------------------------------------------------");
+                    break;
+
                 case 4: // Added checking of the song to add
                     System.out.println("\n---------------------------------------------------------------------------");
                     System.out.println("Popular song now:");
@@ -127,64 +147,63 @@ public class Main {
                     System.out.print("Put the number of the song you'd like to add - ");
                     int addPopularSong = scanner.nextInt() - 1;
 
-                    if(addPopularSong <= popularSongs.size()){
-                    usersSongs.add(popularSongs.get(addPopularSong));
+                    if (addPopularSong <= popularSongs.size()) {
+                        usersSongs.add(popularSongs.get(addPopularSong));
 
-                    System.out.println("The song - " + popularSongs.get(addPopularSong).getNameOfSong() + " has added!");
+                        System.out.println("The song - " + popularSongs.get(addPopularSong).getNameOfSong() + " has added!");
 
-                    System.out.println("\n---------------------------------------------------------------------------");
-                    System.out.println("\nYour updated playlist:");
-                    for (Song s : usersSongs) {
-                        System.out.println((usersSongs.indexOf(s) + 1) + "." + s.getNameOfSong() + " ");
-                    }
-                    System.out.println("\n---------------------------------------------------------------------------");
-                    break;
-                    }
-                    else{
+                        System.out.println("\n---------------------------------------------------------------------------");
+                        System.out.println("\nYour updated playlist:");
+                        for (Song s : usersSongs) {
+                            System.out.println((usersSongs.indexOf(s) + 1) + "." + s.getNameOfSong() + " ");
+                        }
+                        System.out.println("\n---------------------------------------------------------------------------");
+                        break;
+                    } else {
                         System.out.println("\nThere is no the song with this number(");
                         System.out.println("\n-----------------------------------------------------------------------");
                         break;
                     }
                 case 5:
                     System.out.println("\n---------------------------------------------------------------------------");
-                    if(usersSongs.size() != 0){
-                    System.out.println("\nYour playlist:");
-                    for (Song s : usersSongs) {
-                        System.out.println((usersSongs.indexOf(s) + 1) + "." + s.getNameOfSong() + " ");
-                    }
-                    System.out.println("\n---------------------------------------------------------------------------");
-                    System.out.print("Put the number of the song you'd like to listen - ");
-                    int songToListen = scanner.nextInt() - 1;
-                    System.out.print("Now is playing - " + usersSongs.get(songToListen).getNameOfSong() +
-                            " by - " + usersSongs.get(songToListen).getAuthorOfSong());
+                    if (usersSongs.size() != 0) {
+                        System.out.println("\nYour playlist:");
+                        for (Song s : usersSongs) {
+                            System.out.println((usersSongs.indexOf(s) + 1) + "." + s.getNameOfSong() + " ");
+                        }
+                        System.out.println("\n---------------------------------------------------------------------------");
+                        System.out.print("Put the number of the song you'd like to listen - ");
+                        int songToListen = scanner.nextInt() - 1;
+                        System.out.print("Now is playing - " + usersSongs.get(songToListen).getNameOfSong() +
+                                " by - " + usersSongs.get(songToListen).getAuthorOfSong());
 
-                    usersSongs.get(songToListen).increaseCountOfListening(); //Controlling count of listenings
+                        usersSongs.get(songToListen).increaseCountOfListening(); //Controlling count of listenings
 
-                    boolean desireToContinue = true;
-                    while(desireToContinue) {
-                        System.out.println("\nWould you like to continue to listening to your songs?\n1.Yes\n2.No");
-                        System.out.print("Put your answer - ");
-                        int answer = scanner.nextInt();
-                        switch (answer) {
-                            case 1:
-                                System.out.print("Put the number of song you'd like to listen to - ");
-                                numberOfSong = scanner.nextInt() - 1;
-                                System.out.print("Now is playing - " + popularSongs.get(numberOfSong).getNameOfSong());
-                                break;
-                            case 2:
-                                desireToContinue = false;
-                                break;
-                            default:
-                                System.out.println("Wrong answer!");
+                        boolean desireToContinue = true;
+                        while (desireToContinue) {
+                            System.out.println("\nWould you like to continue to listening to your songs?\n1.Yes\n2.No");
+                            System.out.print("Put your answer - ");
+                            int answer = scanner.nextInt();
+                            switch (answer) {
+                                case 1:
+                                    System.out.print("Put the number of song you'd like to listen to - ");
+                                    numberOfSong = scanner.nextInt() - 1;
+                                    System.out.print("Now is playing - " + popularSongs.get(numberOfSong).getNameOfSong());
+                                    break;
+                                case 2:
+                                    desireToContinue = false;
+                                    break;
+                                default:
+                                    System.out.println("Wrong answer!");
                             }
                         }
-                    }
-                    else {
+                    } else {
                         System.out.println("\nYour playlist is empty!");
                         System.out.println("\n--------------------------------------------------------------------------");
                         break;
                     }
                 case 6:
+
                     break;
                 case 0:
                     System.out.println("\nYou have successfully exited!");
